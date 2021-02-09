@@ -43,3 +43,13 @@
   background-color: lightblue;
   text-align: center;
 }
+
+.hide {
+  display: none;
+}
+.show {
+  display : block;
+}
+button:hover {
+  background-color: yellow;
+}

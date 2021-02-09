@@ -1,22 +1,22 @@
 import React ,  {useState, useEffect} from "react"
 import DatePicker from 'react-date-picker';
 import "./app.css"
-// const dotenv = require('dotenv');
-// dotenv.config();
+import {XCircleIcon} from '@primer/octicons-react'
 
 function App() {
    const [error, setError] = useState(null);
   //  const [isLoaded, setIsLoaded] = useState(false);
-   const [items, setItems] = useState([]);
+  const [items, setItems] = useState([]);
   const [state, setState] = React.useState('mn');
   const [value, onChange] = useState(new Date());
   const [positive, setPositive] = useState();
   const [negative, setNegative] = useState();
   const [history ] = useState([]);
-  // const { REACT_APP_FIVE} = process.env.REACT_APP_FIVE;
-  // const [isOpen, setIsOpen] = useState(false); 
+  const [showHistory , serShowHistory] = useState(false);
 
+  //change foramt of date to api format - yyyymmdd
   function formatDate(date) {
+    debugger;
     var d = new Date(date),
         month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),
@@ -30,14 +30,15 @@ function App() {
 
     return (year+month+day).toString();
 }
-
+//add to search history current search
   function saveSerchHistory (serchResult) {
     if (history.length === 5){
       history.shift();
     }
     history.push(serchResult);
   }
-
+ 
+  //update data for current state and date
   function changedata(data ,currdate )
   {
     onChange(currdate);
@@ -117,22 +118,20 @@ function App() {
       <h1 className={`data`}> Selected state: {state} ,Selected date: {formatDate(value)}</h1>
       <div className={`positive`}> positive : {positive}</div>
       <div className={`negative`}> negative : {negative}</div>
+
+      <h1>search history</h1>
+      <button onClick= {() => serShowHistory(!showHistory)}>
+      <XCircleIcon size={24}/>
+      </button>
       
-      <h1>serch history</h1>
       <h2 className={'data'}> state  |  date  |  positive  |  negative</h2>
-      <div> 
+      <div className={(showHistory ===true ? 'show': 'hide')}> 
       {history.map(item => {
              return (
                 <li className={(item.positivePrecent <5 ? 'five' : item.positivePrecent >10 ?'ten' :'fiveToTen')} value={item.state}> {item.state.toLowerCase()} | {item.date} | {item.positive} | {item.negative} </li>
              )
             })}
       </div>
-      {/* <details>
-              <summary>
-                  First text detail.
-              </summary>
-              <p>testing</p>
-      </details> */}
       </div>
     );
   }
