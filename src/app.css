@@ -1,0 +1,21 @@
+.negative {
+  border: 5px outset red;
+  background-color: lightblue;
+  text-align: center;
+}
+
+.positive {
+  border: 5px outset greenyellow;
+  background-color: lightblue;
+  text-align: center;
+}
+.data {
+  border: 5px ;
+  background-color: lightblue;
+  text-align: center;
+}
+
+.hader {
+  background-color: lightblue;
+  text-align: center;
+}
