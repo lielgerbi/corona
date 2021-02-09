@@ -9,6 +9,30 @@
   background-color: lightblue;
   text-align: center;
 }
+
+.orange {
+  border: 5px outset rgb(226, 141, 13);
+  background-color: lightblue;
+  text-align: center;
+}
+
+.five {
+  border: 5px outset red;
+  background-color: lightcoral;
+  text-align: center;
+}
+
+.ten {
+  border: 5px outset greenyellow;
+  background-color: lightgreen;
+  text-align: center;
+}
+
+.fiveToTen {
+  border: 5px outset rgb(226, 141, 13);
+  background-color: lightsalmon;
+  text-align: center;
+}
 .data {
   border: 5px ;
   background-color: lightblue;

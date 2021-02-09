@@ -1,6 +1,8 @@
 import React ,  {useState, useEffect} from "react"
 import DatePicker from 'react-date-picker';
 import "./app.css"
+// const dotenv = require('dotenv');
+// dotenv.config();
 
 function App() {
    const [error, setError] = useState(null);
@@ -10,6 +12,9 @@ function App() {
   const [value, onChange] = useState(new Date());
   const [positive, setPositive] = useState();
   const [negative, setNegative] = useState();
+  const [history ] = useState([]);
+  // const { REACT_APP_FIVE} = process.env.REACT_APP_FIVE;
+  // const [isOpen, setIsOpen] = useState(false); 
 
   function formatDate(date) {
     var d = new Date(date),
@@ -26,13 +31,18 @@ function App() {
     return (year+month+day).toString();
 }
 
-  // Note: the empty deps array [] means
-  // this useEffect will run once
-  // similar to componentDidMount()
+  function saveSerchHistory (serchResult) {
+    if (history.length === 5){
+      history.shift();
+    }
+    history.push(serchResult);
+  }
+
   function changedata(data ,currdate )
   {
     onChange(currdate);
     var dateInFormat = formatDate(currdate);
+    var serchResult = {};
     setState(data);
     fetch("https://api.covidtracking.com/v1/states/"+state.toLowerCase()+"/"+dateInFormat+".json")
       .then(res => res.json())
@@ -40,6 +50,12 @@ function App() {
         (result) => {
           setPositive(result.positive);
           setNegative(result.negative);
+          serchResult = {'positive' : positive,
+                          'negative' : negative,
+                          'date' : dateInFormat , 
+                          'state' : state ,
+                          'positivePrecent' : (positive*100 )/ negative};
+        saveSerchHistory(serchResult);
         },
         (error) => {
           console.log(error);
@@ -101,6 +117,22 @@ function App() {
       <h1 className={`data`}> Selected state: {state} ,Selected date: {formatDate(value)}</h1>
       <div className={`positive`}> positive : {positive}</div>
       <div className={`negative`}> negative : {negative}</div>
+      
+      <h1>serch history</h1>
+      <h2 className={'data'}> state  |  date  |  positive  |  negative</h2>
+      <div> 
+      {history.map(item => {
+             return (
+                <li className={(item.positivePrecent <5 ? 'five' : item.positivePrecent >10 ?'ten' :'fiveToTen')} value={item.state}> {item.state.toLowerCase()} | {item.date} | {item.positive} | {item.negative} </li>
+             )
+            })}
+      </div>
+      {/* <details>
+              <summary>
+                  First text detail.
+              </summary>
+              <p>testing</p>
+      </details> */}
       </div>
     );
   }
