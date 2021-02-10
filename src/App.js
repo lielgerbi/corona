@@ -2,6 +2,8 @@ import React ,  {useState, useEffect} from "react"
 import DatePicker from 'react-date-picker';
 import "./app.css"
 import {XCircleIcon , TrashIcon} from '@primer/octicons-react'
+import 'bootstrap/dist/css/bootstrap.css';
+import { Navbar } from 'react-bootstrap';
 
 function App() {
    const [error, setError] = useState(null);
@@ -32,9 +34,9 @@ function App() {
 //add to search history current search
 debugger;
   function saveSerchHistory (serchResult) {
-    if (history.length === 5){
-      history.shift();
-    }
+    // if (history.length === 5){
+    //   history.shift();
+    // }
     history.push(serchResult);
   }
 
@@ -107,6 +109,9 @@ debugger;
   else {
     return (
       <div>
+        <Navbar sticky="top" bg="light">
+        <Navbar.Brand href="#home">CORONA IN USA</Navbar.Brand>
+        </Navbar>
         <select state={state} onChange={e => changedata(e.currentTarget.value , value)}>
             {items.map(item => {
              return (
