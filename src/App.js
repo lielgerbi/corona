@@ -1,7 +1,7 @@
 import React ,  {useState, useEffect} from "react"
 import DatePicker from 'react-date-picker';
 import "./app.css"
-import {XCircleIcon} from '@primer/octicons-react'
+import {XCircleIcon , TrashIcon} from '@primer/octicons-react'
 
 function App() {
    const [error, setError] = useState(null);
@@ -11,12 +11,11 @@ function App() {
   const [value, onChange] = useState(new Date());
   const [positive, setPositive] = useState();
   const [negative, setNegative] = useState();
-  const [history ] = useState([]);
+  const [history, setHistory]  = useState([]);
   const [showHistory , serShowHistory] = useState(false);
 
   //change foramt of date to api format - yyyymmdd
   function formatDate(date) {
-    debugger;
     var d = new Date(date),
         month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),
@@ -31,11 +30,17 @@ function App() {
     return (year+month+day).toString();
 }
 //add to search history current search
+debugger;
   function saveSerchHistory (serchResult) {
     if (history.length === 5){
       history.shift();
     }
     history.push(serchResult);
+  }
+
+  //remove search from history search
+  function deleteSearch (serchResult) {
+    setHistory(history.filter(item=>item!==serchResult));
   }
  
   //update data for current state and date
@@ -128,7 +133,10 @@ function App() {
       <div className={(showHistory ===true ? 'show': 'hide')}> 
       {history.map(item => {
              return (
-                <li className={(item.positivePrecent <5 ? 'five' : item.positivePrecent >10 ?'ten' :'fiveToTen')} value={item.state}> {item.state.toLowerCase()} | {item.date} | {item.positive} | {item.negative} </li>
+                <li className={(item.positivePrecent <5 ? 'five' : item.positivePrecent >10 ?'ten' :'fiveToTen')} value={item.state}> 
+                    {item.state.toLowerCase()} | {item.date} | {item.positive} | {item.negative}
+                    <button onClick={() => deleteSearch(item)}> <TrashIcon size={16}/></button>
+                </li>
              )
             })}
       </div>
