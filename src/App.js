@@ -44,6 +44,7 @@ function App() {
 
   function changedata(data ,currdate )
   {
+    debugger;
     onChange(currdate);
     var dateInFormat = formatDate(currdate);
     var serchResult = {};
@@ -108,7 +109,7 @@ function App() {
         <Popup trigger={<button> show current time</button>} position="right center">
           <div><Clock /></div>
         </Popup>
-        <select state={state} onChange={e => changedata(e.currentTarget.value , value)}>
+        <select state={state} onChange={e => setState(e.currentTarget.value) }>
             {items.map(item => {
              return (
                 <option value={item.state}> {item.name} </option>
@@ -116,7 +117,7 @@ function App() {
             })}
         </select>
         <DatePicker
-        onChange={(value, e) => changedata(state, value)}
+        onChange={onChange}
         value={value}
          
       />
@@ -124,6 +125,7 @@ function App() {
       <h1 className={`data`}> Selected state: {state} ,Selected date: {formatDate(value)}</h1>
       <div className={`positive`}> positive : {positive}</div>
       <div className={`negative`}> negative : {negative}</div>
+      <button variant="outline-dark" onClick= {() => changedata(state , value)}>Search data</button>
       
       <h1>serch history</h1>
       <h2 className={'data'}> state  |  date  |  positive  |  negative</h2>
@@ -134,12 +136,6 @@ function App() {
              )
             })}
       </div>
-      {/* <details>
-              <summary>
-                  First text detail.
-              </summary>
-              <p>testing</p>
-      </details> */}
       </div>
     );
   }
