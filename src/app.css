@@ -43,3 +43,10 @@
   background-color: lightblue;
   text-align: center;
 }
+.seperator {
+  text-decoration: line-through;
+}
+
+h3:hover {
+  color:blue
+}

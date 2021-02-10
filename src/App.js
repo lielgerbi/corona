@@ -1,6 +1,9 @@
 import React ,  {useState, useEffect} from "react"
 import DatePicker from 'react-date-picker';
 import "./app.css"
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+import Clock from './Clock';
 // const dotenv = require('dotenv');
 // dotenv.config();
 
@@ -13,6 +16,7 @@ function App() {
   const [positive, setPositive] = useState();
   const [negative, setNegative] = useState();
   const [history ] = useState([]);
+  
   // const { REACT_APP_FIVE} = process.env.REACT_APP_FIVE;
   // const [isOpen, setIsOpen] = useState(false); 
 
@@ -101,6 +105,9 @@ function App() {
   else {
     return (
       <div>
+        <Popup trigger={<button> show current time</button>} position="right center">
+          <div><Clock /></div>
+        </Popup>
         <select state={state} onChange={e => changedata(e.currentTarget.value , value)}>
             {items.map(item => {
              return (
