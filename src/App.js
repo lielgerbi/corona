@@ -4,6 +4,11 @@ import "./app.css"
 import {XCircleIcon , TrashIcon} from '@primer/octicons-react'
 import 'bootstrap/dist/css/bootstrap.css';
 import { Navbar } from 'react-bootstrap';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
+import Clock from './Clock';
+// const dotenv = require('dotenv');
+// dotenv.config();
 
 function App() {
    const [error, setError] = useState(null);
@@ -15,6 +20,7 @@ function App() {
   const [negative, setNegative] = useState();
   const [history, setHistory]  = useState([]);
   const [showHistory , serShowHistory] = useState(false);
+
 
   //change foramt of date to api format - yyyymmdd
   function formatDate(date) {
@@ -48,6 +54,7 @@ debugger;
   //update data for current state and date
   function changedata(data ,currdate )
   {
+    debugger;
     onChange(currdate);
     var dateInFormat = formatDate(currdate);
     var serchResult = {};
@@ -109,10 +116,16 @@ debugger;
   else {
     return (
       <div>
+
         <Navbar sticky="top" bg="light">
         <Navbar.Brand href="#home">CORONA IN USA</Navbar.Brand>
         </Navbar>
-        <select state={state} onChange={e => changedata(e.currentTarget.value , value)}>
+
+        <Popup trigger={<button> show current time</button>} position="right center">
+          <div><Clock /></div>
+        </Popup>
+        <select state={state} onChange={e => setState(e.currentTarget.value) }>
+
             {items.map(item => {
              return (
                 <option value={item.state}> {item.name} </option>
@@ -120,16 +133,17 @@ debugger;
             })}
         </select>
         <DatePicker
-        onChange={(value, e) => changedata(state, value)}
+        onChange={onChange}
         value={value}
          
       />
 
-      <h1 className={`data`}> Selected state: {state} ,Selected date: {formatDate(value)}</h1>
+      <h1 className={`data`}> Selected state: {state} ,Selected date: {formatDate(value)}
+      <button variant="outline-dark" onClick= {() => changedata(state , value)}>Search data</button>
+      </h1>
       <div className={`positive`}> positive : {positive}</div>
       <div className={`negative`}> negative : {negative}</div>
 
-      <h1>search history</h1>
       <button onClick= {() => serShowHistory(!showHistory)}>
       <XCircleIcon size={24}/>
       </button>

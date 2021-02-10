@@ -53,3 +53,10 @@
 button:hover {
   background-color: yellow;
 }
+.seperator {
+  text-decoration: line-through;
+}
+
+h3:hover {
+  color:blue
+}
